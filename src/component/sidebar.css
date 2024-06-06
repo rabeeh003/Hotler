@@ -1,0 +1,6 @@
+@media (max-width: 768px) {
+    .sidebar-horizontal {
+      flex-direction: row;
+      overflow-x: auto;
+    }
+  }
