@@ -23,7 +23,7 @@ function SideBar() {
                 }}
             >
                 <ListboxItem
-                    className=''
+                    href='/admin'
                     key="issues"
                     startContent={
                         <IconWrapper className="bg-success/10 text-success">
@@ -34,6 +34,7 @@ function SideBar() {
                     Dashboard
                 </ListboxItem>
                 <ListboxItem
+                href='/admin/analytics'
                     key="pull_requests"
                     startContent={
                         <IconWrapper className="bg-primary/10 text-primary">
