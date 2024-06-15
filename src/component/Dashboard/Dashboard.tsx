@@ -130,7 +130,7 @@ function Dashboard() {
           <Dropdown>
             <DropdownTrigger>
               <Button isIconOnly size="sm" variant="light">
-              <EllipsisVertical />
+                <EllipsisVertical />
               </Button>
             </DropdownTrigger>
             <DropdownMenu>
@@ -151,7 +151,7 @@ function Dashboard() {
 
   return (
     <div className="w-full">
-      <Table aria-label="Example table with products and actions" selectionMode="none" style={{ width: "100%" }}>
+      <Table aria-label="Example table with products and actions" selectionMode="single" style={{ width: "100%" }}>
         <TableHeader columns={columns}>
           {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
         </TableHeader>

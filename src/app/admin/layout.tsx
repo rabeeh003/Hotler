@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import AdminNavbar from "@/component/AdminNavbar";
-import SideBar from "@/component/SideBar";
+import AdminNavbar from "@/component/Bars/AdminNavbar";
+import SideBar from "@/component/Bars/SideBar";
+import BottumBar from "@/component/Bars/BottumBar";
+import { AuthProvider } from "./AuthProvider";
 
 export const metadata: Metadata = {
   title: "HM-admin",
@@ -13,11 +15,18 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
+    <main className="static">
       <AdminNavbar />
-      <div className="mt-4 md:flex gap-4 px-3">
+      <div className="md:invisible md:hidden w-full ">
+        <div className="w-[80vw] m-auto px-3 py-2 rounded-xl">
+          <BottumBar />
+        </div>
+      </div>
+      <div className="container md:flex h-full gap-4 px-3 md:pt-2 pb-5 overflow-auto">
         <SideBar />
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </div>
     </main>
   );

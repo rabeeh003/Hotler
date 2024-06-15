@@ -1,0 +1,31 @@
+"use client";
+import { Spinner } from "@nextui-org/react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import React from "react";
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+        <div className="w-full h-[60vh] flex justify-center items-center">
+            <Spinner label="Loading..." color="warning" />
+        </div>
+    )
+  }
+
+  if (!session) {
+    return (
+      <div className="w-full h-[60vh] block justify-center items-center">
+        <p className="text-center">You are not signed in.</p>
+        <button onClick={() => signIn()}>Sign In</button>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {children}
+    </>
+  );
+}

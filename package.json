@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -12,8 +12,10 @@
     "@nextui-org/react": "^2.4.1",
     "chart.js": "^4.4.3",
     "framer-motion": "^11.2.10",
+    "gsap": "^3.12.5",
     "lucide-react": "^0.383.0",
-    "next": "14.3.0-canary.9",
+    "next": "^14.2.4",
+    "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",

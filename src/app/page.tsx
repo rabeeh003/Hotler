@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { Button } from '@nextui-org/button';
-import DefualtNavbar from "@/component/DefualtNavbar";
+import DefualtNavbar from "@/component/Bars/DefualtNavbar";
+import HeroSection from "@/component/Home/HeroSection";
 
 export default function Home() {
   return (
     <>
       <DefualtNavbar/>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h2>hello</h2>
-        <Button variant="ghost" className="bg-yellow-500">Click me</Button>
+      <main className="flex flex-col items-center justify-between px-12 lg:px-24">
+        <HeroSection/>
       </main>
     </>
   );

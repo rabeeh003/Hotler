@@ -1,6 +1,7 @@
 import React from 'react'
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
 import { ThemeSwitcher } from './ThemeSwitcher';
+import AuthButton from './AuthButton';
 
 function DefualtNavbar() {
   return (
@@ -43,14 +44,12 @@ function DefualtNavbar() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <ThemeSwitcher/>
+        <ThemeSwitcher />
         <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
+          <AuthButton/>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
