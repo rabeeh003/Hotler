@@ -1,34 +1,61 @@
-import React from 'react';
-import Image from 'next/image'; // Using next/image for optimized images
+"use client";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import styles from "./hero.module.css";
 
-function HeroSection() {
-    
+gsap.registerPlugin(ScrollTrigger);
+
+const HeroSection = () => {
+    const component = useRef();
+    const slider = useRef();
+
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+            let panels = gsap.utils.toArray(`.${styles.panel}`);
+            gsap.to(panels, {
+                xPercent: -100 * (panels.length - 1),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: slider.current,
+                    pin: true,
+                    scrub: 1,
+                    snap: 1 / (panels.length - 1),
+                    // end: () => "+=" + slider.current.offsetWidth,
+                    markers: false
+                }
+            });
+        }, component);
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <div className="w-full border-b border-neutral-900 pb-8 lg:pb-16">
-            <div className="flex flex-col lg:flex-row items-center">
-                <div className="w-full lg:w-1/2 p-4 lg:p-8">
-                    <h1 className="text-4xl lg:text-6xl font-semibold tracking-tight">
-                        Vyavasay
-                    </h1>
-                    <span className="block bg-gradient-to-r from-yellow-200 via-slate-50 to-yellow-800 bg-clip-text text-transparent tracking-tight text-2xl lg:text-3xl mt-4">
-                        Business Partner
-                    </span>
-                    <p className="mt-4 text-lg">
-                        In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.
-                    </p>
-                </div>
-                <div className="w-full lg:w-1/2 p-4 lg:p-8">
-                    <Image 
-                        src="/path/to/your/image.jpg" 
-                        alt="Hero Image" 
-                        width={500} 
-                        height={500} 
-                        className="rounded-lg" 
-                    />
+        <div className={styles.hero}>
+            <div className={styles.subhero}>
+
+                <div className={styles.App} ref={component}>
+                    <div className={styles.firstContainer}>
+                        <h1>Testing horizontal scrolling w/ three sections</h1>
+                        <h2>First Container</h2>
+                    </div>
+                    <div ref={slider} className={styles.slider}>
+                        <div className={`${styles.panel} ${styles.blue}`}>
+                            <div>
+                                SCROLL DOWN
+                                <div className={styles.scrollDown}>
+                                    <div className={styles.arrow}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`${styles.panel} ${styles.red}`}>ONE</div>
+                        <div className={`${styles.panel} ${styles.orange}`}>TWO</div>
+                        <div className={`${styles.panel} ${styles.purple}`}>THREE</div>
+                    </div>
+                    <div className={styles.lastContainer}>Last Container</div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default HeroSection;

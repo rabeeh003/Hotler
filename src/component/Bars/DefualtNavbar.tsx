@@ -6,6 +6,7 @@ import AuthButton from './AuthButton';
 function DefualtNavbar() {
   return (
     <Navbar
+    className=''
       classNames={{
         item: [
           "flex",

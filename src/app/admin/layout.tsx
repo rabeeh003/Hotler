@@ -22,7 +22,7 @@ export default function Layout({
           <BottumBar />
         </div>
       </div>
-      <div className="container md:flex h-full gap-4 px-3 md:pt-2 pb-5 overflow-auto">
+      <div className="container m-auto md:flex h-full gap-4 px-3 md:pt-2 pb-5 overflow-auto">
         <SideBar />
         <AuthProvider>
           {children}
