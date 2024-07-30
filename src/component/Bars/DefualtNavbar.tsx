@@ -25,16 +25,16 @@ function DefualtNavbar() {
       }}
     >
       <NavbarBrand>
-        <p className="font-bold text-inherit">HM</p>
+        <p className="font-bold text-inherit">Hotler</p>
       </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden md:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="#">
             Features
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
-          <Link href="#" aria-current="page">
+          <Link color="foreground" href="#">
             Customers
           </Link>
         </NavbarItem>

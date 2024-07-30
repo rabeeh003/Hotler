@@ -23,7 +23,7 @@ function AdminNavbar() {
     <Navbar className='sticky top-0'>
       <NavbarBrand>
       <ChefHat size={30} />
-        <p className="font-bold text-inherit">HM</p>
+        <p className="font-bold text-inherit">Hotler</p>
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
