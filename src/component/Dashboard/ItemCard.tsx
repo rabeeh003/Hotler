@@ -8,29 +8,19 @@ function ItemCard() {
         <Card
             isFooterBlurred
             radius="lg"
-            className="border-none min-h-[300px] min-w-[200px]  flex-none "
+            className="flex-none p-2 dark:border-1 dark:border-gray-700 "
         >
             <Image
                 alt="Woman listing to music"
-                className="object-cover"
+                className="object-cover rounded-lg m-auto max-w-[100px] max-h-[100px]"
                 height={300}
                 src="https://t3.ftcdn.net/jpg/05/66/68/36/360_F_566683667_BeBecGFABNQYkZhquqJxhSj7UOcCY7ZJ.jpg"
                 width={200}
             />
-            <CardFooter className="m-1 py-3 justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden  before:rounded-xl rounded-large bottom-1 ">
-                <p className="flex justify-center text-center align-middle text-white/80"><IndianRupee size={15} className='font-semibold m-auto' /> <span className='text-center align-middle mx-1 text-xl font-semibold'>11</span></p>
-                <div>
-
-                    <Button className="text-tiny text-balance min-w-0 " variant="flat" color="danger" radius="sm" size="sm">
-                        -
-                    </Button>
-                    <span className='text-center align-middle mx-1 font-semibold'>11</span>
-                    <Button className="text-tiny text-balance min-w-0" variant="flat" color="success" radius="sm" size="sm">
-                        +
-                    </Button>
-                </div>
-
-            </CardFooter>
+            <div className='p-2 block'>
+                <p className='font-bold'>Biriyani</p>
+                <span className='text-center flex text-success-500'><IndianRupee size={15} className='my-auto' />120</span>
+            </div>
         </Card>
     )
 }

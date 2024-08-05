@@ -6,7 +6,7 @@ import AuthButton from './AuthButton';
 function DefualtNavbar() {
   return (
     <Navbar
-    className=''
+      className=''
       classNames={{
         item: [
           "flex",
@@ -27,7 +27,7 @@ function DefualtNavbar() {
       <NavbarBrand>
         <p className="font-bold text-inherit">Hotler</p>
       </NavbarBrand>
-      <NavbarContent className="hidden md:flex gap-4" justify="center">
+      {/* <NavbarContent className="hidden md:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="#">
             Features
@@ -43,14 +43,14 @@ function DefualtNavbar() {
             Integrations
           </Link>
         </NavbarItem>
-      </NavbarContent>
+      </NavbarContent> */}
       <NavbarContent justify="end">
         <ThemeSwitcher />
         <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <AuthButton/>
+          <AuthButton />
         </NavbarItem>
       </NavbarContent>
     </Navbar>

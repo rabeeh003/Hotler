@@ -4,8 +4,8 @@ import SideBar from "@/component/Bars/SideBar";
 import BottumBar from "@/component/Bars/BottumBar";
 
 export const metadata: Metadata = {
-  title: "HM-admin",
-  description: "Manage your products and customers",
+  title: "Register",
+  description: "Manage your service and customers with us",
 };
 
 export default function Layout({

@@ -5,6 +5,7 @@ import { Accordion, AccordionItem, Avatar, Button } from '@nextui-org/react';
 import { Edit, PlusCircle } from 'lucide-react';
 import ItemTable from '@/component/Items/ItemTable';
 import AddItem from '@/component/Items/AddItem';
+import BottumBar from '@/component/Bars/BottumBar';
 
 export default function ItemsPage() {
     const itemClasses = {
@@ -20,6 +21,11 @@ export default function ItemsPage() {
 
     return (
         <main className='w-full text-md font-semibold'>
+            <div className="md:invisible md:hidden w-full ">
+                <div className="w-[80vw] m-auto px-3 py-2 rounded-xl">
+                    <BottumBar />
+                </div>
+            </div>
             <div className='flex justify-between mb-3 py-2 px-3 bg-content1 overflow-visible shadow-small rounded-medium'>
                 <h2>Items and Category</h2>
             </div>
@@ -50,9 +56,9 @@ export default function ItemsPage() {
                             </p>
                         }
                     >
-                        <AddItem/>
+                        <AddItem />
                         {/* <Button className='min-w-0 my-2' variant='ghost' color='secondary' >Add Products</Button> */}
-                       <ItemTable/>
+                        <ItemTable />
                     </AccordionItem>
                 </Accordion>
                 <Accordion

@@ -8,7 +8,7 @@ function ItemCard2() {
         <Card
             isFooterBlurred
             radius="lg"
-            className="border-none min-h-[300px] min-w-[200px]  flex-none "
+            className="border-none flex-none"
         >
             <Image
                 alt="Woman listing to music"

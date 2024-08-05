@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import {nextui} from "@nextui-org/react";
+import { nextui } from "@nextui-org/react";
 
 const svgToDataUri = require("mini-svg-data-uri");
 const {
@@ -20,6 +20,12 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-primary":
+          "linear-gradient(to right, var(--gradient-primary-start), var(--gradient-primary-end))",
+      },
+      colors: {
+        "gradient-primary-start": "var(--gradient-primary-start)",
+        "gradient-primary-end": "var(--gradient-primary-end)",
       },
     },
   },
@@ -39,7 +45,7 @@ const config: Config = {
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
       );
     },
-  ]
+  ],
 };
 
 function addVariablesForColors({ addBase, theme }: any) {
@@ -47,11 +53,13 @@ function addVariablesForColors({ addBase, theme }: any) {
   let newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
   );
- 
+
+  newVars["--gradient-primary-start"] = "#6366F1"; // indigo-300
+  newVars["--gradient-primary-end"] = "#A855F7";   // purple-300
+
   addBase({
     ":root": newVars,
   });
 }
 
 export default config;
-

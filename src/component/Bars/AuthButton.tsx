@@ -8,11 +8,11 @@ function AuthButton() {
     return (
         <>
             {session ? (
-                <Button as={Link} href='/admin' color="warning" className='text-slate-50' variant="shadow">
+                <Button as={Link} href='/shop'  className='bg-gradient-primary text-slate-50' variant="shadow">
                     Dashboard                  
                 </Button>
             ) : (
-                <Button onClick={()=>signIn()} color="warning" className='text-slate-50' variant="shadow">
+                <Button onClick={()=>signIn()}  className='bg-gradient-primary text-slate-50' variant="shadow">
                     Start
                 </Button>
             )}
