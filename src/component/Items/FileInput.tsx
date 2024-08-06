@@ -1,4 +1,5 @@
 'use client'
+import { Input } from '@nextui-org/react';
 import React, { useRef, ChangeEvent, MouseEvent } from 'react';
 
 interface FileInputProps {
@@ -24,16 +25,17 @@ const FileInput: React.FC<FileInputProps> = ({ setSelectedFile }) => {
 
     return (
         <>
-            <input
+            <Input
+                className='md:hidden'
                 type="file"
                 ref={inputRef}
                 onChange={handleOnChange}
-                style={{ display: "none" }}
+                // style={{ display: "none" }}
                 accept="image/*"
             />
             <button
                 type="button"
-                className="w-64 h-36 text-lg font-medium flex flex-col items-center justify-center gap-4 text-green-700 bg-white border-2 border-dashed border-green-700 rounded-xl cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-green-700"
+                className="hidden md:flex w-64 h-36 text-lg font-medium flex-col items-center justify-center gap-4 text-green-700 bg-white border-2 border-dashed border-green-700 rounded-xl cursor-pointer transition-all duration-300 ease-in-out hover:bg-white hover:text-green-700"
                 onClick={onChooseFile}
             >
                 <span className="material-symbols-rounded text-3xl w-12 h-12 flex items-center justify-center rounded-full bg-green-100 text-green-700">

@@ -37,6 +37,7 @@ export default function ItemTable() {
             key: "3",
             product: "Mandi",
             price: 130,
+            offer:100,
             count: 94,
             category: 'Mandi & alfahm',
         },
@@ -44,6 +45,7 @@ export default function ItemTable() {
             key: "4",
             product: "Chicken biriyani",
             price: 120,
+            offer:100,
             count: 200,
             category: 'Biriyani',
         },
@@ -61,6 +63,10 @@ export default function ItemTable() {
         {
             key: "price",
             label: "PRICE",
+        },
+        {
+            key: "offer",
+            label: "Offer price",
         },
         {
             key: "count",
