@@ -8,7 +8,7 @@ import { Trash } from 'lucide-react';
 const AddItem: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["count"]));
+    const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set(["count"]));
 
     const selectedValue = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -25,8 +25,8 @@ const AddItem: React.FC = () => {
 
     return (
         <>
-            <div className="flex flex-wrap gap-3">
-                <Button onPress={handleOpen} size='sm' className='min-w-0 w-full my-2' variant='ghost' color='secondary'>Add Products</Button>
+            <div className="">
+                <Button onPress={handleOpen}  className='min-w-0' variant='ghost' color='secondary'>Add New</Button>
             </div>
             <Modal
                 size="xl"
@@ -59,36 +59,35 @@ const AddItem: React.FC = () => {
                                     <Input size='sm' label="Item name" className='w-full' />
                                     <Input size='sm' label="Category" className='w-full' />
                                     <div className='w-full'>
-                                            <p className='text-gray-400 text-sm' >Select quantity type</p>
-                                            <Dropdown>
-                                                <DropdownTrigger>
-                                                    <Button
-                                                        className="bg-zinc-800 w-full items-start text-left mt-1  p-3 text-gray-400 border-none rounded-lg"
-                                                    >
-                                                        {selectedValue ? selectedValue : "Select quantity type"}
-                                                    </Button>
-                                                </DropdownTrigger>
-                                                <DropdownMenu
-                                                    aria-label="Multiple selection for quantity type"
-                                                    variant="flat"
-                                                    closeOnSelect={false}
-                                                    // defaultSelectedKeys={'all'}
-                                                    disallowEmptySelection
-                                                    selectionMode="multiple"
-                                                    selectedKeys={selectedKeys}
-                                                    onSelectionChange={setSelectedKeys}
+                                        <p className='text-gray-400 text-sm'>Select quantity type</p>
+                                        <Dropdown>
+                                            <DropdownTrigger>
+                                                <Button
+                                                    className="bg-zinc-800 w-full items-start text-left mt-1 p-3 text-gray-400 border-none rounded-lg"
                                                 >
-                                                    <DropdownItem description="ex : 1, 2, 3" key="count">Count</DropdownItem>
-                                                    <DropdownItem description="ex : 1kg, 2kg" key="kg">KG</DropdownItem>
-                                                    <DropdownItem description="ex : Quater, Half, full" key="custom">Custom</DropdownItem>
-                                                </DropdownMenu>
-                                            </Dropdown>
-                                        </div>
+                                                    {selectedValue ? selectedValue : "Select quantity type"}
+                                                </Button>
+                                            </DropdownTrigger>
+                                            <DropdownMenu
+                                                aria-label="Multiple selection for quantity type"
+                                                variant="flat"
+                                                closeOnSelect={false}
+                                                disallowEmptySelection
+                                                selectionMode="multiple"
+                                                selectedKeys={selectedKeys}
+                                                onSelectionChange={(keys) => setSelectedKeys(keys as Set<string>)}
+                                            >
+                                                <DropdownItem description="ex : 1, 2, 3" key="count">Count</DropdownItem>
+                                                <DropdownItem description="ex : 1kg, 2kg" key="kg">KG</DropdownItem>
+                                                <DropdownItem description="ex : Quater, Half, full" key="custom">Custom</DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
                                 </div>
-                                <div className=' flex flex-wrap gap-1 md:py-0'>
+                                <div className='flex flex-wrap gap-1 md:py-0'>
                                     <div className='flex md:grid flex-wrap justify-between md:justify-end w-full gap-1 h-0'>
                                         <Input size='sm' label="Quantity" className='w-full sm:max-w-[80px]' />
-                                        <Input size='sm' label="Price" className='w-full  sm:max-w-[80px]' />
+                                        <Input size='sm' label="Price" className='w-full sm:max-w-[80px]' />
                                         <Input size='sm' label="Offer Price" className='w-full sm:max-w-[80px]' />
                                     </div>
                                 </div>

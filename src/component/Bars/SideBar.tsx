@@ -62,6 +62,7 @@ function SideBar() {
                     </ListboxItem>
                     <ListboxItem
                         key="Qr"
+                        href='/shop/settings'
                         startContent={
                             <IconWrapper className="bg-warning/10 text-warning">
                                 <QrCodeIcon className="text-lg " />

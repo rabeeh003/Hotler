@@ -16,7 +16,7 @@ function BottumBar() {
                 <Utensils className="m-auto text-secondary-400 text-lg"/>
                 <span>Items</span>
             </a>
-            <a href="" className='block text-center'>
+            <a href="/shop/settings" className='block text-center'>
                 <QrCodeIcon  className="text-warning-400 m-auto text-lg"/>
                 <span>Qr</span>
             </a>

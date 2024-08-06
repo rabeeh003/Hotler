@@ -58,8 +58,6 @@ export default function ItemsPage() {
                             </p>
                         }
                     >
-                        <AddItem />
-                        {/* <Button className='min-w-0 my-2' variant='ghost' color='secondary' >Add Products</Button> */}
                         <ItemTable />
                     </AccordionItem>
                 </Accordion>
