@@ -278,9 +278,9 @@ const ItemTable: React.FC = () => {
       topContent={topContent}
       bottomContent={bottomContent}
       selectedKeys={selectedKeys}
-      onSelectionChange={(keys: Key[]) => setSelectedKeys(keys)}
+      // onSelectionChange={(keys: Key[]) => setSelectedKeys(keys)}
       sortDescriptor={sortDescriptor}
-      onSortChange={(descriptor: SortDescriptor) => setSortDescriptor(descriptor)}
+      // onSortChange={(descriptor: SortDescriptor) => setSortDescriptor(descriptor)}
     >
       <TableHeader columns={headerColumns}>
         {(column) => (
@@ -292,7 +292,7 @@ const ItemTable: React.FC = () => {
       <TableBody className="flex items-start " items={sortedItems}>
         {(item) => (
           <TableRow key={item.key}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            {(columnKey) => <TableCell>{renderCell(item,columnKey.toString())}</TableCell>}
           </TableRow>
         )}
       </TableBody>
