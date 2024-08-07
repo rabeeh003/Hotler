@@ -1,0 +1,1 @@
+export const baseURL = 'https://hotel-management-production.up.railway.app/'

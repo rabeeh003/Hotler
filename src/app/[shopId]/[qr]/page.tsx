@@ -13,7 +13,7 @@ export default function Page({ params }: { params: { shopId: string, qr: string 
       </div>
       <p className="text-xl text-center font-mono font-thin mt-14">{params.shopId}</p>
       <div className="flex flex-col justify-center">
-        <div className="sticky z-50 top-0 pt-4 bg-white backdrop-filter backdrop-blur-lg bg-opacity-80 border-b border-gray-200">
+        <div className="sticky z-50 top-0 pt-4 bg-white backdrop-filter shadow-lg backdrop-blur-lg bg-opacity-80 border-b border-gray-200">
           <div className="flex px-3 gap-1 max-w-[500px] m-auto">
             <Input
               type="text"
@@ -24,7 +24,7 @@ export default function Page({ params }: { params: { shopId: string, qr: string 
             <Button variant="faded">Go</Button>
           </div>
           {/* Categories */}
-          <div className="flex p-3 gap-3 justify-center w-screen overflow-x-auto">
+          <div className="flex p-3 gap-3 sm:justify-center w-screen overflow-x-auto">
             {["Tea", "Food", "Mandi", "Juice", "Snacks", "Specials", "Desserts", "Beverages"].map((category, index) => (
               <div key={index} className="flex-shrink-0 text-center p-2">
                 <Avatar src={`https://i.pravatar.cc/150?u=a04258114e29026708c${index}`} isBordered radius="full" className="m-auto" />
@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { shopId: string, qr: string 
           </div>
         </div>
         {/* products */}
-        <div className="flex flex-wrap gap-2 mx-auto justify-around max-w-[600px]">
+        <div className="flex flex-wrap gap-2 mx-auto justify-around py-3 max-w-[600px]">
           <ItemCard />
           <ItemCard />
           <ItemCard />

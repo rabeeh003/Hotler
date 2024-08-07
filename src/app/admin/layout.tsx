@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import AdminNavbar from "@/component/Bars/AdminNavbar";
-import SideBar from "@/component/Bars/SideBar";
-import BottumBar from "@/component/Bars/BottumBar";
+import { Providers } from "./provideres";
 
 export const metadata: Metadata = {
   title: "HM-admin",
@@ -15,7 +13,9 @@ export default function Layout({
 }>) {
   return (
     <main >
-      {children}
+      <Providers>
+        {children}
+      </Providers>
     </main>
   );
 }

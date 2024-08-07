@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useSession, signOut } from "next-auth/react"
+// import { useSession, signOut } from "next-auth/react"
 import {
   Navbar,
   NavbarBrand,
@@ -18,7 +18,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 import { ChefHat } from 'lucide-react';
 
 function AdminNavbar() {
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
   return (
     <Navbar className='sticky top-0'>
       <NavbarBrand>
@@ -53,21 +53,22 @@ function AdminNavbar() {
               as="button"
               className="transition-transform"
               color="secondary"
-              name={session?.user?.name || 'user'}
+              name= 'user'
               size="sm"
-              src={session?.user?.image || ''}
+              src=''
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">{session?.user?.email}</p>
+              <p className="font-semibold">email id</p>
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem key="team_settings">Team Settings</DropdownItem>
             <DropdownItem key="analytics">Analytics</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem onClick={()=>signOut()} key="logout" color="danger">
+            <DropdownItem  key="logout" color="danger">
+              {/* onClick={()=>signOut()} */}
               Log Out
             </DropdownItem>
           </DropdownMenu>

@@ -2,15 +2,15 @@
 
 import { NextUIProvider } from '@nextui-org/react'
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { SessionProvider } from "next-auth/react"
+import StoreProvider from '../../lib/redux/StoreProvider';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
-        <SessionProvider>
+        <StoreProvider>
           {children}
-        </SessionProvider>
+        </StoreProvider>
       </NextThemesProvider>
     </NextUIProvider>
   )
