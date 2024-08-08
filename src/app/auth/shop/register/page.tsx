@@ -2,7 +2,6 @@
 import { Button, Input } from '@nextui-org/react';
 import axios from 'axios';
 import React, { useState } from 'react';
-import 'tailwindcss/tailwind.css';
 
 const ShopLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +9,6 @@ const ShopLogin: React.FC = () => {
   const [name, setName] = useState('');
   const [location, setLocation] = useState({ lat: '', long: '' });
   const [phone, setPhone] = useState('')
-  console.log("poooodathendi");
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();

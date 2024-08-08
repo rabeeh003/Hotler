@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { shopId: string, qr: string 
           </div>
         </div>
         {/* products */}
-        <div className="flex flex-wrap gap-2 mx-auto justify-around py-3 max-w-[600px]">
+        <div className="flex flex-wrap gap-2 mx-auto justify-around p-3 max-w-[600px]">
           <ItemCard />
           <ItemCard />
           <ItemCard />

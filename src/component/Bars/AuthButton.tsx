@@ -1,10 +1,11 @@
 'use client'
 import { Button, Link } from '@nextui-org/react'
 import React from 'react'
-import { useSession, signIn } from "next-auth/react"
+// import { useSession, signIn } from "next-auth/react"
 
 function AuthButton() {
-    const { data: session } = useSession()
+    // const { data: session } = useSession()
+    const session = false
     return (
         <>
             {session ? (
@@ -12,7 +13,8 @@ function AuthButton() {
                     Dashboard                  
                 </Button>
             ) : (
-                <Button onClick={()=>signIn()}  className='bg-gradient-primary text-slate-50' variant="shadow">
+                <Button  className='bg-gradient-primary text-slate-50' variant="shadow">
+                    {/* onClick={()=>signIn()}  */}
                     Start
                 </Button>
             )}

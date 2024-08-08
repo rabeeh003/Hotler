@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { Button } from '@nextui-org/button';
 import DefualtNavbar from "@/component/Bars/DefualtNavbar";
 import HeroSection from "@/component/Home/HeroSection";
 import { Endrance } from "@/component/Home/Endrance";

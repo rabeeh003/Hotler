@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-// import { useSession, signOut } from "next-auth/react"
+// import { use Session, signOut } from "next-auth/react"
 import {
   Navbar,
   NavbarBrand,
@@ -18,7 +18,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 import { ChefHat } from 'lucide-react';
 
 function AdminNavbar() {
-  // const { data: session } = useSession()
+  // const { data: session } = use Session()
   return (
     <Navbar className='sticky top-0'>
       <NavbarBrand>

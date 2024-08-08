@@ -1,13 +1,10 @@
 "use client";
-import { Button, Input } from '@nextui-org/react';
 import axios from 'axios';
 import React, { useState } from 'react';
-import 'tailwindcss/tailwind.css';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  console.log("poooodathendi");
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();

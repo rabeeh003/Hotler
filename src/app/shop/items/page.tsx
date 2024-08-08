@@ -1,6 +1,5 @@
 'use client'
 import React from 'react';
-import BoxCard from '@/component/Dashboard/BoxCard';
 import { Accordion, AccordionItem, Avatar, Button } from '@nextui-org/react';
 import { BadgePercent, Edit, Layers3, PlusCircle, Puzzle, ShoppingBasket } from 'lucide-react';
 import ItemTable from '@/component/Items/ItemTable';
