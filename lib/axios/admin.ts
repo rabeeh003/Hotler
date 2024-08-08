@@ -8,7 +8,7 @@ const adminAPI = axios.create({
 });
 
 adminAPI.interceptors.request.use((config) => {
-  const token = getCookie('admin');
+  const token = getCookie('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

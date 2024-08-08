@@ -2,88 +2,95 @@
 import { Button, Input } from '@nextui-org/react';
 import axios from 'axios';
 import React, { useState } from 'react';
+import shopAPI from '../../../../../lib/axios/shop';
+import { useRouter } from 'next/navigation';
+import { z } from 'zod';
 
 const ShopLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [location, setLocation] = useState({ lat: '', long: '' });
-  const [phone, setPhone] = useState('')
+  const [errors, setErrors] = useState<any>({});
+  const [backendError, setBackendError] = useState<string | null>(null);
+  const router = useRouter();
 
-  const login = async (e: React.FormEvent) => {
+  const schema = z.object({
+    email: z.string().email({ message: "Please enter a valid email" }),
+    password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  });
+
+  const login = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
-    await axios.post('http://10.4.2.148:3000/api/auth/user-login', email)
+    try {
+      schema.parse({ email, password });
+      setErrors({});
+      setBackendError(null);
+      shopAPI.post('api/auth/shop-login', { email, password })
+        .then((res) => {
+          console.log(res.data);
+          router.push('/shop'); 
+        })
+        .catch((err) => {
+          if (err.response && err.response.data) {
+            setBackendError(err.response.data.message || 'An error occurred');
+          } else {
+            setBackendError('An error occurred');
+          }
+          console.log(err);
+        });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setErrors(error.flatten().fieldErrors);
+      }
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
-      <div className=" p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Shop Register</h2>
-        <div>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="p-8 rounded md:shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Shop Login</h2>
+        <form onSubmit={login}>
           <div className="my-2">
-            <label className="block text-gray-400 mb-2" htmlFor="name">
-              Shop name
-            </label>
-            <Input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full"
-            />
-          </div>
-          <div className="my-2">
-            <label className="block text-gray-400 mb-2" htmlFor="phone">
-              Owner phone
-            </label>
-            <Input
-              type="number"
-              id="phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              className="w-full"
-            />
-          </div>
-          <div className="">
-            <label className="block text-gray-400 mb-2" htmlFor="email">
-              Email
-            </label>
             <Input
               type="email"
-              id="email"
+              label="Email"
+              variant="bordered"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              isInvalid={!!errors.email}
+              errorMessage={errors.email ? errors.email[0] : ''}
               className="w-full"
             />
           </div>
-          <div className="my-2">
-            <label className="block text-gray-400 mb-2" htmlFor="password">
-              Password
-            </label>
+          <div className="mb-6">
             <Input
               type="password"
-              id="password"
+              label="Password"
+              variant="bordered"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
+              isInvalid={!!errors.password}
+              errorMessage={errors.password ? errors.password[0] : ''}
               className="w-full"
             />
           </div>
-          <Button onClick={login} className="w-full bg-blue-500 text-white py-2 mt-2 rounded-xl hover:bg-blue-600">
-            Register
-          </Button>
-          <p className='text-center text-sm my-2'>
-            <a href='shop/'>I have already an account</a>
+          <p className="text-center text-sm my-2">
+            <a href="shop/reset/">Forgot password?</a>
           </p>
-        </div>
-
+          <Button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-xl hover:bg-blue-600">
+            Login
+          </Button>
+        </form>
+        {backendError && (
+          <div className="mb-4 text-red-500 text-center">
+            {backendError}
+          </div>
+        )} 
+        <p className="text-center text-sm my-2">
+          <a href="shop/register/">Create new account</a>
+        </p>
       </div>
     </div>
   );
 };
-export default ShopLogin
+
+export default ShopLogin;

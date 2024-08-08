@@ -25,7 +25,7 @@ export const fetchShopData = createAsyncThunk(
   "shop/fetchShopData",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await shopAPI.get("/account/verify-token/");
+      const response = await shopAPI.get("api/auth/get-data");
       return response.data;
     } catch (error) {
       return rejectWithValue("user not found");

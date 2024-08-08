@@ -20,9 +20,9 @@ export default function Layout({
   );
   const router = useRouter();
 
-  // useEffect(() => {
-  //   dispatch(fetchShopData());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchShopData());
+  }, [dispatch]);
 
   useEffect(() => {
     if (error) {
