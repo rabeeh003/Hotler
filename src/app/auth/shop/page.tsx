@@ -5,9 +5,6 @@ import React, { useEffect, useState } from 'react';
 import shopAPI from '../../../../lib/axios/shop';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../../../lib/redux/hooks';
-import { RootState } from '../../../../lib/redux/store';
 
 const ShopLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -15,12 +12,14 @@ const ShopLogin: React.FC = () => {
   const [errors, setErrors] = useState<any>({});
   const [backendError, setBackendError] = useState<string | null>(null);
   const router = useRouter();
-  const token = localStorage.getItem('shop')
   useEffect(() => {
-    if (token) {
-      router.push('/shop/')
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem('shop');
+      if (token) {
+        router.push('/shop');
+      }
     }
-  }, [token])
+  }, [router]);
 
   const schema = z.object({
     email: z.string().email({ message: "Please enter a valid email" }),
@@ -38,7 +37,7 @@ const ShopLogin: React.FC = () => {
         .then((res) => {
           console.log(res.data, "responce");
           localStorage.setItem('shop', res.data.token);
-          router.push('/shop'); // Redirect to a dashboard or appropriate page on success
+          router.push('/shop');
         })
         .catch((err) => {
           if (err.response && err.response.data) {
@@ -90,14 +89,14 @@ const ShopLogin: React.FC = () => {
             />
           </div>
           <p className="text-center text-sm my-2">
-            <a href="shop/reset/">Forgot password?</a>
+            <a href="/auth/shop/reset/">Forgot password?</a>
           </p>
           <Button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-xl hover:bg-blue-600">
             Login
           </Button>
         </form>
         <p className="text-center text-sm my-2">
-          <a href="shop/register/">Create new account</a>
+          <a href="/auth/shop/register/">Create new account</a>
         </p>
       </div>
     </div>
