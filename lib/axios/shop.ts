@@ -8,8 +8,9 @@ export const shopAPI = axios.create({
 });
 
 shopAPI.interceptors.request.use((config) => {
-  const token = getCookie('token');
-  console.log("token", token);
+  // const token = getCookie('token');
+  const token = localStorage.getItem('shop');
+  console.log("shop", token);
   
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

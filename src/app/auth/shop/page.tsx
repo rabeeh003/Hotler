@@ -1,10 +1,13 @@
 "use client";
 import { Button, Input } from '@nextui-org/react';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import shopAPI from '../../../../lib/axios/shop';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../../../lib/redux/hooks';
+import { RootState } from '../../../../lib/redux/store';
 
 const ShopLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +15,12 @@ const ShopLogin: React.FC = () => {
   const [errors, setErrors] = useState<any>({});
   const [backendError, setBackendError] = useState<string | null>(null);
   const router = useRouter();
+  const token = localStorage.getItem('shop')
+  useEffect(() => {
+    if (token) {
+      router.push('/shop/')
+    }
+  }, [token])
 
   const schema = z.object({
     email: z.string().email({ message: "Please enter a valid email" }),
@@ -27,7 +36,8 @@ const ShopLogin: React.FC = () => {
       setBackendError(null);
       shopAPI.post('api/auth/shop-login', { email, password })
         .then((res) => {
-          console.log(res.data);
+          console.log(res.data, "responce");
+          localStorage.setItem('shop', res.data.token);
           router.push('/shop'); // Redirect to a dashboard or appropriate page on success
         })
         .catch((err) => {

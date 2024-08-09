@@ -4,6 +4,7 @@ import { Listbox, ListboxItem } from '@nextui-org/react';
 import React, { ReactNode } from 'react';
 import { cn } from "@nextui-org/react";
 import { BarChartBig, BugIcon, LayoutDashboard, QrCodeIcon, Utensils } from 'lucide-react';
+import Link from 'next/link';
 
 interface IconWrapperProps {
     children: ReactNode;
@@ -20,58 +21,48 @@ function SideBar() {
     return (
         <aside className='pb-4'>
             <div className='hidden md:flex'>
-                <Listbox
-                    aria-label="User Menu"
-                    className="p-0 gap-0 bg-content1 shadow-small rounded-medium"
-                    itemClasses={{
-                        base: "px-3 first:rounded-t-medium last:rounded-b-medium rounded-none gap-3 h-12 data-[hover=true]:bg-default-100/80",
-                    }}
-                >
-                    <ListboxItem
+                <div className="bg-content1 shadow-small rounded-medium p-3 grid gap-2">
+                    <Link
                         href='/shop'
                         key="Dashboard"
-                        startContent={
-                            <IconWrapper className="bg-success/10 text-success">
-                                <LayoutDashboard className="text-lg " />
-                            </IconWrapper>
-                        }
+                        className='flex gap-1 items-center'
                     >
+                        <IconWrapper className="bg-success/10 text-success">
+                            <LayoutDashboard className="text-lg " />
+                        </IconWrapper>
                         Dashboard
-                    </ListboxItem>
-                    <ListboxItem
+                    </Link>
+                    <Link
                         href='/shop/analytics'
                         key="Analytics"
-                        startContent={
-                            <IconWrapper className="bg-primary/10 text-primary">
-                                <BarChartBig className="text-lg " />
-                            </IconWrapper>
-                        }
+                        className='flex gap-1 items-center'
                     >
+                        <IconWrapper className="bg-primary/10 text-primary">
+                            <BarChartBig className="text-lg " />
+                        </IconWrapper>
                         Analytics
-                    </ListboxItem>
-                    <ListboxItem
+                    </Link>
+                    <Link
                         href='/shop/items'
                         key="Items"
-                        startContent={
-                            <IconWrapper className="bg-secondary/10 text-secondary">
-                                <Utensils className="text-lg " />
-                            </IconWrapper>
-                        }
+                        className='flex gap-1 items-center'
                     >
+                        <IconWrapper className="bg-secondary/10 text-secondary">
+                            <Utensils className="text-lg " />
+                        </IconWrapper>
                         Items
-                    </ListboxItem>
-                    <ListboxItem
-                        key="Qr"
+                    </Link>
+                    <Link
+                        key="settings"
                         href='/shop/settings'
-                        startContent={
-                            <IconWrapper className="bg-warning/10 text-warning">
-                                <QrCodeIcon className="text-lg " />
-                            </IconWrapper>
-                        }
+                        className='flex gap-1 items-center'
                     >
-                        Qr
-                    </ListboxItem>
-                </Listbox>
+                        <IconWrapper className="bg-warning/10 text-warning">
+                            <QrCodeIcon className="text-lg " />
+                        </IconWrapper>
+                        settings
+                    </Link>
+                </div>
             </div>
         </aside >
     );
