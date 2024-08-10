@@ -1,18 +1,22 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Image, Input } from "@nextui-org/react";
 import FileInput from './FileInput';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { Trash } from 'lucide-react';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '@/config/firbase';
+import { v4 } from 'uuid'
+import shopAPI from '../../../lib/axios/shop';
+import { useAppDispatch, useAppSelector } from '../../../lib/redux/hooks';
+import { RootState } from '../../../lib/redux/store';
+import { fetchCategoryData } from '../../../lib/redux/reduceres/categoryAndProduct';
 
 const AddCategory: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["count"]));
-
-    const selectedValue = React.useMemo(
-        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-        [selectedKeys]
+    const [category, setCategory] = React.useState('');
+    const { id } = useAppSelector(
+        (state: RootState) => state.shop
     );
 
     const handleOpen = () => {
@@ -21,6 +25,46 @@ const AddCategory: React.FC = () => {
 
     const handleClose = () => {
         setIsOpen(false);
+    }
+
+    const dispatch = useAppDispatch();
+    const shopId = useAppSelector((state) => state.shop.id);
+
+    const submit = () => {
+        if (selectedImage && category && id) {
+            const imageRef = ref(storage, `files/category/${v4()}`)
+            uploadBytes(imageRef, selectedImage).then((value) => {
+                console.log("image uploaded", value)
+                getDownloadURL(value.ref).then((url) => {
+                    console.log(url)
+                    let imageUrl = url
+                    console.log(
+                        {
+                            shop: id,
+                            name: category,
+                            image: imageUrl
+                        }
+                    );
+                    if (imageUrl) {
+                        shopAPI.post('/api/category/add-category', {
+                            shop: id,
+                            name: category,
+                            image: imageUrl
+                        }).then((response) => {
+                            console.log(response, "Category Successfully Added")
+                            if (shopId !== null) {
+                                dispatch(fetchCategoryData(shopId));
+                            }
+                            handleClose()
+                        }).catch((error) => {
+                            console.log(error)
+                        })
+                    }
+                })
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
     }
 
     return (
@@ -54,16 +98,16 @@ const AddCategory: React.FC = () => {
                                     ) : (
                                         <FileInput setSelectedFile={setSelectedImage} />
                                     )}
-                                    <Input size='sm' label="Category name" className='w-full md:max-w-[300px]' />
+                                    <Input size='sm' onChange={(e) => setCategory(e.target.value)} label="Category name" className='w-full md:max-w-[300px]' />
                                 </div>
-                                
+
                             </div>
                         </ModalBody>
                         <ModalFooter>
                             <Button color="danger" variant="light" onPress={handleClose}>
                                 Cancel
                             </Button>
-                            <Button color="secondary" onPress={handleClose}>
+                            <Button color="secondary" onPress={() => submit()}>
                                 Add
                             </Button>
                         </ModalFooter>

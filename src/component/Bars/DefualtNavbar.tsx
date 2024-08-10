@@ -46,9 +46,6 @@ function DefualtNavbar() {
       </NavbarContent> */}
       <NavbarContent justify="end">
         <ThemeSwitcher />
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
         <NavbarItem>
           <AuthButton />
         </NavbarItem>

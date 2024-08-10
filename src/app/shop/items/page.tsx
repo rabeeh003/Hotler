@@ -1,12 +1,14 @@
 'use client'
-import React from 'react';
-import { Accordion, AccordionItem, Avatar, Button } from '@nextui-org/react';
-import { BadgePercent, Edit, Layers3, PlusCircle, Puzzle, ShoppingBasket } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Accordion, AccordionItem, Avatar, Button, Spinner } from '@nextui-org/react';
+import { BadgePercent, Edit, Layers3, PlusCircle, Puzzle, RefreshCcw, ShoppingBasket } from 'lucide-react';
 import ItemTable from '@/component/Items/ItemTable';
 import AddItem from '@/component/Items/AddItem';
 import BottumBar from '@/component/Bars/BottumBar';
 import AddCategory from '@/component/Items/AddCategory';
 import AddCombo from '@/component/Items/AddCombo';
+import { useAppDispatch, useAppSelector } from '../../../../lib/redux/hooks';
+import { fetchCategoryData, fetchProductData } from '../../../../lib/redux/reduceres/categoryAndProduct';
 
 export default function ItemsPage() {
     const itemClasses = {
@@ -17,8 +19,18 @@ export default function ItemsPage() {
         content: "text-small px-2",
     };
 
-    const defaultContent =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+    const dispatch = useAppDispatch();
+    const shopId = useAppSelector((state) => state.shop.id);
+    const { categories, products, loading, error } = useAppSelector((state) => state.categoryAndProducts);
+
+    useEffect(() => {
+        if (shopId && categories) {
+            dispatch(fetchCategoryData(shopId));
+        }
+        if (shopId && products) {
+            dispatch(fetchProductData(shopId));
+        }
+    }, [dispatch, shopId]);
 
     return (
         <main className='w-full text-md font-semibold'>
@@ -44,7 +56,6 @@ export default function ItemsPage() {
                     <AccordionItem
                         key="1"
                         aria-label="Category"
-
                         startContent={
                             <ShoppingBasket
                                 className='text-secondary-400'
@@ -57,7 +68,7 @@ export default function ItemsPage() {
                             </p>
                         }
                     >
-                        <ItemTable />
+                        <ItemTable data={products} />
                     </AccordionItem>
                 </Accordion>
                 <Accordion
@@ -70,7 +81,6 @@ export default function ItemsPage() {
                     <AccordionItem
                         key="1"
                         aria-label="Category"
-
                         startContent={
                             <Layers3
                                 className='text-secondary-400'
@@ -83,28 +93,36 @@ export default function ItemsPage() {
                             </p>
                         }
                     >
-                        <div className="">
-                            <AddCategory />
-                            <div className='flex w-full justify-between items-center py-3 border-b-1 dark:border-gray-800 border-gray-300'>
-                                <div className='flex gap-4'>
-                                    <Avatar isBordered color="default" src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-                                    <span className='text-md font-sans font-semibold'>Biriyani</span>
-                                </div>
-                                <Edit className='text-secondary' size="20" />
+                        <AddCategory />
+                        {loading ? (
+                            <div className="flex items-center justify-center h-full">
+                                <Spinner />
                             </div>
-                            <div className='flex w-full justify-between items-center py-3 border-b-1 dark:border-gray-800 border-gray-300'>
-                                <div className='flex gap-4'>
-                                    <Avatar isBordered color="default" src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-                                    <span className='text-md font-sans font-semibold'>Biriyani</span>
-                                </div>
-                                <Edit className='text-secondary' size="20" />
+                        ) : error ? (
+                            <div className="grid items-center justify-center h-full">
+                                <p className="text-red-500">Sorry, Try again.</p>
+                                <Button className='max-w-0 m-auto border-none' variant='bordered'>
+                                    <RefreshCcw/>
+                                </Button>
                             </div>
-                        </div>
+                        ) : (
+                            <div className="">
+                                {categories.map((category) => (
+                                    <div key={category._id} className="flex items-center justify-between py-3 border-b-1 dark:border-gray-800 border-gray-300">
+                                        <div className="flex gap-4">
+                                            <Avatar isBordered color="default" radius='full' src={category.image}/>
+                                            <span className="text-md font-sans font-semibold">{category.name}</span>
+                                        </div>
+                                        <div className="flex gap-4">
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </AccordionItem>
                     <AccordionItem
                         key="2"
                         aria-label="Combo"
-
                         startContent={
                             <Puzzle
                                 className='text-secondary-400'
@@ -138,5 +156,4 @@ export default function ItemsPage() {
                 </Accordion>
             </div>
         </main>
-    );
-}
+    )}

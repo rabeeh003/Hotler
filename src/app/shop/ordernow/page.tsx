@@ -1,6 +1,7 @@
-import { Button, Tooltip } from "@nextui-org/react";
+import { Button, Link, Tooltip } from "@nextui-org/react";
 import { CircleCheckBig, ClipboardList, CornerUpLeft, Plus, Printer, Trash } from "lucide-react";
 import ItemsList from "@/component/OrderCreate/ItemsList";
+import BackBtn from "@/component/OrderCreate/backBtn";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <div className="mb-3 py-2 px-3 bg-content1 overflow-visible shadow-small rounded-medium">
         <div className='flex  justify-between overflow-x-scroll md:scrollbar-hide'>
           <div className="flex gap-1 items-center">
-            <a href="/shop/"><Button variant="ghost" className="min-w-5 p-1 border-none mr-1"> <CornerUpLeft size={15} className='my-auto' /> </Button></a>
+            <BackBtn/>
             <span className="cursor-pointer text-gray-500 select-none flex-none flex ms-1 pr-2 pb-1 rounded-br-lg border-r-1 border-b-1 border-gray-300 font-sans text-sm"><ClipboardList size={15} className="my-auto" /> New order</span>
             <span className="cursor-pointer text-gray-500 select-none flex-none flex ms-1 pr-2 pb-1 rounded-br-lg border-r-1 border-b-1 border-gray-300 font-sans text-sm"><ClipboardList size={15} className="my-auto" /> New order</span>
             <span className="cursor-pointer text-gray-500 select-none flex-none flex ms-1 pr-2 pb-1 rounded-br-lg border-r-1 border-b-1 border-gray-300 font-sans text-sm"><ClipboardList size={15} className="my-auto" /> New order</span>

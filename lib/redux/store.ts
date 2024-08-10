@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import shopReducer from './reduceres/shop'
+import categoryAndProductsSlice from './reduceres/categoryAndProduct'
 export const makeStore = () => {
     return configureStore({
         reducer: {
             shop: shopReducer,
+            categoryAndProducts: categoryAndProductsSlice,
         },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({

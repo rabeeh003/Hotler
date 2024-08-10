@@ -24,7 +24,7 @@ export function ThemeSwitcher() {
             <Switch
                 checked={theme === 'dark'}
                 onChange={handleChange}
-                color="success"
+                color="primary"
                 size="lg"
                 startContent={<SunIcon />}
                 endContent={<MoonIcon />}

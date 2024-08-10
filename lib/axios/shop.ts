@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { baseURL } from '../const-values';
-import { getCookie } from '../cookie';
+// import { getCookie } from '../cookie';
 
 export const shopAPI = axios.create({
   baseURL: baseURL,

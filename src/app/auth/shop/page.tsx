@@ -6,6 +6,13 @@ import shopAPI from '../../../../lib/axios/shop';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 
+export function saveToken(token: string): void {
+  const expiresIn = 30 * 24 * 60 * 60;
+  const expiryTime = new Date().getTime() + expiresIn * 1000; 
+  localStorage.setItem('shop', token);
+  localStorage.setItem('tokenExpiry', expiryTime.toString());
+}
+
 const ShopLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +43,7 @@ const ShopLogin: React.FC = () => {
       shopAPI.post('api/auth/shop-login', { email, password })
         .then((res) => {
           console.log(res.data, "responce");
-          localStorage.setItem('shop', res.data.token);
+          saveToken(res.data.token);
           router.push('/shop');
         })
         .catch((err) => {

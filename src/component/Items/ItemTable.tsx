@@ -12,12 +12,15 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Chip,
   Input,
   Pagination,
+  Image,
+  Switch,
+  Avatar,
 } from "@nextui-org/react";
 import { ChevronDownIcon, EllipsisVertical, PlusIcon, SearchIcon } from "lucide-react";
 import AddItem from "./AddItem";
+import { useSelector } from "react-redux"; // Assuming you have a Redux setup
 
 // Define types for sort descriptor and table key
 type Key = string | number;
@@ -34,35 +37,27 @@ type RowType = {
   offer?: number;
   count: number;
   category: string;
+  imageUrl: string; // Added imageUrl property
 };
 
+const INITIAL_VISIBLE_COLUMNS = ["image", "product", "price", "offer", "count", "category", "actions"];
 
-
-const INITIAL_VISIBLE_COLUMNS = ["product", "price", "offer", "count", "category", "actions"];
-
-const ItemTable: React.FC = () => {
+const ItemTable: React.FC<{ data: Array<object> }> = ({ data }) => {
   const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
-  const rows: RowType[] = [
-    { key: "1", product: "Vada", price: 10, count: 24, category: "Snacks" },
-    { key: "2", product: "Light tea", price: 10, count: 100, category: "Drinks" },
-    { key: "3", product: "Mandi", price: 130, offer: 100, count: 94, category: "Mandi & alfahm" },
-    { key: "4", product: "Chicken biriyani", price: 120, offer: 100, count: 200, category: "Biriyani" },
-    { key: "11", product: "Vada", price: 10, count: 24, category: "Snacks" },
-    { key: "21", product: "Light tea", price: 10, count: 100, category: "Drinks" },
-    { key: "31", product: "Mandi", price: 130, offer: 100, count: 94, category: "Mandi & alfahm" },
-    { key: "41", product: "Chicken biriyani", price: 120, offer: 100, count: 200, category: "Biriyani" },
-    { key: "12", product: "Vada", price: 10, count: 24, category: "Snacks" },
-    { key: "23", product: "Light tea", price: 10, count: 100, category: "Drinks" },
-    { key: "33", product: "Mandi", price: 130, offer: 100, count: 94, category: "Mandi & alfahm" },
-    { key: "43", product: "Chicken biriyani", price: 120, offer: 100, count: 200, category: "Biriyani" },
-    { key: "11", product: "Vada", price: 10, count: 24, category: "Snacks" },
-    { key: "23", product: "Light tea", price: 10, count: 100, category: "Drinks" },
-    { key: "31", product: "Mandi", price: 130, offer: 100, count: 94, category: "Mandi & alfahm" },
-    { key: "45", product: "Chicken biriyani", price: 120, offer: 100, count: 200, category: "Biriyani" },
-  ];
+  // Map the incoming data to the format expected by the table
+  const rows: RowType[] = data.map((item: any) => ({
+    key: item._id,
+    product: item.name,
+    price: item.price,
+    offer: item.offerPrice || undefined,
+    count: item.quantity,
+    category: item.category.name,
+    imageUrl: item.image, // Add imageUrl from data
+  }));
 
   const columns = [
+    { key: "image", label: "IMAGE" },
     { key: "product", label: "PRODUCT" },
     { key: "price", label: "PRICE" },
     { key: "offer", label: "OFFER PRICE" },
@@ -71,11 +66,9 @@ const ItemTable: React.FC = () => {
     { key: "actions", label: "" },
   ];
 
-  const statusOptions = [
-    { name: "Snacks", uid: "Snacks" },
-    { name: "Drinks", uid: "Drinks" },
-    { name: "Biriyani", uid: "Biriyani" },
-  ];
+  // Fetch categories from the Redux store
+  const categories = useSelector((state: any) => state.categories) || [];
+  const statusOptions = [{ name: "All", uid: "all" }, ...categories];
 
   const [filterValue, setFilterValue] = useState<string>("");
   const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
@@ -84,6 +77,7 @@ const ItemTable: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({ column: 'defaultKey', direction: 'ascending' });
   const [page, setPage] = useState<number>(1);
+  const [highlightRows, setHighlightRows] = useState<boolean>(false);
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -93,16 +87,16 @@ const ItemTable: React.FC = () => {
   }, [visibleColumns]);
 
   const filteredItems = useMemo(() => {
-    let filteredUsers = [...rows];
+    let filteredRows = [...rows];
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((row) =>
+      filteredRows = filteredRows.filter((row) =>
         row.product.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-      filteredUsers = filteredUsers.filter((row) => row.category === statusFilter);
+    if (statusFilter !== "all") {
+      filteredRows = filteredRows.filter((row) => row.category === statusFilter);
     }
-    return filteredUsers;
+    return filteredRows;
   }, [rows, filterValue, statusFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -141,6 +135,8 @@ const ItemTable: React.FC = () => {
           </DropdownMenu>
         </Dropdown>
       );
+    } else if (columnKey === "image") {
+      return <Avatar src={item.imageUrl} alt={item.product} radius="full" isBordered />;
     }
     return cellValue;
   };
@@ -172,9 +168,13 @@ const ItemTable: React.FC = () => {
     setPage(1);
   }, []);
 
+  const toggleHighlight = useCallback(() => {
+    setHighlightRows(!highlightRows);
+  }, [highlightRows]);
+
   const topContent = useMemo(() => {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 ">
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
@@ -186,7 +186,7 @@ const ItemTable: React.FC = () => {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} color="secondary" variant="flat">
                   Category
@@ -206,7 +206,7 @@ const ItemTable: React.FC = () => {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} color="secondary" variant="flat">
@@ -228,71 +228,93 @@ const ItemTable: React.FC = () => {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <AddItem/>
+            <AddItem />
           </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">Total {rows.length} items</span>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </label>
+          <div className="flex items-center gap-2">
+            <label className="flex items-center text-default-400 text-small">
+              Rows per page:
+              <select
+                className="ml-2 bg-transparent cursor-pointer text-primary focus
+"
+                value={rowsPerPage}
+                onChange={onRowsPerPageChange}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+              </select>
+            </label>
+          </div>
         </div>
       </div>
     );
-  }, [filterValue, statusFilter, visibleColumns, onRowsPerPageChange, rows.length, onSearchChange, onClear]);
+  }, [
+    rows.length,
+    filterValue,
+    onClear,
+    onSearchChange,
+    rowsPerPage,
+    statusOptions,
+    statusFilter,
+    visibleColumns,
+    columns,
+    onRowsPerPageChange,
+  ]);
 
   const bottomContent = useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">Showing {items.length} of {filteredItems.length}</span>
+      <div className="flex justify-between items-center">
         <Pagination
-          isCompact
           showControls
-          showShadow
-          color="secondary"
+          isCompact
+          isDisabled={pages <= 1}
           page={page}
+          // onNext={onNextPage}
+          // onPrevious={onPreviousPage}
           total={pages}
-          initialPage={1}
-          onChange={(p) => setPage(p)}
         />
+        <div className="flex gap-2 items-center">
+          <span className="text-default-400 text-small">Highlight rows with low stock</span>
+          <Switch isSelected={highlightRows} onValueChange={toggleHighlight} />
+        </div>
       </div>
     );
-  }, [page, pages, items.length, filteredItems.length]);
+  }, [pages, page, highlightRows, onNextPage, onPreviousPage, toggleHighlight]);
 
   return (
     <Table
-      isHeaderSticky
-      aria-label="Example table with dynamic content"
-      classNames={{
-        wrapper: "min-h-[60vh]",
-        table: "overflow-visible",
-      }}
-      topContent={topContent}
+      aria-label="Table with custom cells, pagination, and sorting"
       bottomContent={bottomContent}
+      topContent={topContent}
       selectedKeys={selectedKeys}
-      // onSelectionChange={(keys: Key[]) => setSelectedKeys(keys)}
+      // onSelectionChange={setSelectedKeys}
       sortDescriptor={sortDescriptor}
-      // onSortChange={(descriptor: SortDescriptor) => setSortDescriptor(descriptor)}
+      // onSortChange={setSortDescriptor}
+      className="mt-4"
+      isHeaderSticky
+      bottomContentPlacement="outside" // Place outside to make sticky header
+      // containerProps={{
+      //   className: "max-h-[388px]",
+      // }}
     >
       <TableHeader columns={headerColumns}>
         {(column) => (
-          <TableColumn key={column.key} allowsSorting>
+          <TableColumn
+            key={column.key}
+            allowsSorting={column.key !== "actions"}
+            // width={column.key === "actions" ? "100px" : "auto"}
+          >
             {column.label}
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody className="flex items-start " items={sortedItems}>
+      <TableBody items={sortedItems} emptyContent="No items to display.">
         {(item) => (
-          <TableRow key={item.key}>
-            {(columnKey) => <TableCell>{renderCell(item,columnKey.toString())}</TableCell>}
+          <TableRow key={item.key} className={highlightRows && item.count <= 5 ? (item.count <= 5 ? "bg-red-100" : item.count <= 10 ? "bg-yellow-100" : "") : ""}>
+            {(columnKey) => <TableCell>{renderCell(item, columnKey.toString())}</TableCell>}
           </TableRow>
         )}
       </TableBody>
