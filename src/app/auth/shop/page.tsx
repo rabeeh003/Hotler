@@ -1,17 +1,10 @@
 "use client";
 import { Button, Input } from '@nextui-org/react';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import shopAPI from '../../../../lib/axios/shop';
 import { z } from 'zod';
-import { useRouter } from 'next/navigation';
-
-export function saveToken(token: string): void {
-  const expiresIn = 30 * 24 * 60 * 60;
-  const expiryTime = new Date().getTime() + expiresIn * 1000; 
-  localStorage.setItem('shop', token);
-  localStorage.setItem('tokenExpiry', expiryTime.toString());
-}
+import { useRouter } from 'next/router';
+import { saveToken } from '../../../../lib/tokenExpair';
 
 const ShopLogin: React.FC = () => {
   const [email, setEmail] = useState('');
