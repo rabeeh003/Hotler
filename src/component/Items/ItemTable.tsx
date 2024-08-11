@@ -178,7 +178,7 @@ const ItemTable: React.FC<{ data: Array<object> }> = ({ data }) => {
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
-            className="w-full sm:max-w-[44%] "
+            className="w-full sm:max-w-[34%] "
             placeholder="Search by name..."
             startContent={<SearchIcon />}
             value={filterValue}
@@ -293,7 +293,7 @@ const ItemTable: React.FC<{ data: Array<object> }> = ({ data }) => {
       // onSelectionChange={setSelectedKeys}
       sortDescriptor={sortDescriptor}
       // onSortChange={setSortDescriptor}
-      className="mt-4"
+      // className="mt-4"
       isHeaderSticky
       bottomContentPlacement="outside" // Place outside to make sticky header
       // containerProps={{

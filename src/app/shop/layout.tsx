@@ -76,13 +76,16 @@ export default function Layout({
   }
   if (email) {
     return (
-      <main className="static">
+      <main className="relative">
         <AdminNavbar />
-        <div className="container m-auto md:flex h-full gap-4 px-3 md:pt-2 pb-5 overflow-auto">
-          <SideBar />
+        <div className="container m-auto md:flex h-full gap-4 px-3 md:pt-2 pb-5">
+          <div className="sticky top-20 self-start">
+            <SideBar />
+          </div>
           {children}
         </div>
       </main>
+
     );
   }
 }

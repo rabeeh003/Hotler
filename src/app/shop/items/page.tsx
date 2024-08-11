@@ -24,10 +24,10 @@ export default function ItemsPage() {
     const { categories, products, loading, error } = useAppSelector((state) => state.categoryAndProducts);
 
     useEffect(() => {
-        if (shopId && categories) {
+        if (shopId && categories.length == 0) {
             dispatch(fetchCategoryData(shopId));
         }
-        if (shopId && products) {
+        if (shopId && products.length == 0) {
             dispatch(fetchProductData(shopId));
         }
     }, [dispatch, shopId]);
@@ -67,6 +67,7 @@ export default function ItemsPage() {
                                 Add & edit products
                             </p>
                         }
+                        className=''
                     >
                         <ItemTable data={products} />
                     </AccordionItem>

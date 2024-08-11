@@ -5,11 +5,12 @@ import FileInput from './FileInput';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { Trash } from 'lucide-react';
 import shopAPI from '../../../lib/axios/shop';
-import { useAppSelector } from '../../../lib/redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../lib/redux/hooks';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 } from 'uuid';
 import { storage } from '@/config/firbase';
 import { z } from 'zod';
+import { fetchProductData } from '../../../lib/redux/reduceres/categoryAndProduct';
 
 const schema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -48,10 +49,11 @@ const AddItem: React.FC = () => {
     const handleClose = () => {
         setIsOpen(false);
     }
-
+    
     const shopId = useAppSelector((state) => state.shop.id);
     const categoryData = useAppSelector((state) => state.categoryAndProducts.categories);
-
+    const dispatch = useAppDispatch();
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -92,6 +94,7 @@ const AddItem: React.FC = () => {
                         image: imageUrl
                     }).then((response) => {
                         console.log(response, "Product Successfully Added");
+                        dispatch(fetchProductData(response.data.shop));
                         handleClose();
                     }).catch((error) => {
                         console.log(error);
