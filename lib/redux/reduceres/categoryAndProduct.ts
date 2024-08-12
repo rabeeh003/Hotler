@@ -31,13 +31,17 @@ interface CategoryAndProductsState {
   categories: any[];
   products: any[];
   loading: boolean;
+  productLoading: boolean;
   error: string | null;
+  productError: string | null;
 }
 
 const initialState: CategoryAndProductsState = {
   categories: [],
   products: [],
   loading: false,
+  productLoading: false,
+  productError: null,
   error: null,
 };
 
@@ -62,16 +66,16 @@ const categoryAndProductsSlice = createSlice({
 
     // Handle product fetching
     builder.addCase(fetchProductData.pending, (state) => {
-      state.loading = true;
-      state.error = null;
+      state.productLoading = true;
+      state.productError = null;
     });
     builder.addCase(fetchProductData.fulfilled, (state, action) => {
-      state.loading = false;
+      state.productLoading = false;
       state.products = action.payload;
     });
     builder.addCase(fetchProductData.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as string;
+      state.productLoading = false;
+      state.productError = action.payload as string;
     });
   },
 });

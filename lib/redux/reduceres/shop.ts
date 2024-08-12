@@ -7,9 +7,8 @@ interface ShopState {
   profile: string | null; // Assuming it's a URL or base64 string
   name: string | null;
   id: string | null;
+  superUser: true;
   email: string | null;
-  products: object[] | null;
-  category: object[] | null;
   loading: boolean;
   error: string | null;
 }
@@ -18,9 +17,8 @@ const initialState: ShopState = {
   profile: null,
   name: null,
   id: null,
+  superUser: true,
   email: null,
-  products: null,
-  category: null,
   loading: false,
   error: null,
 };
@@ -58,8 +56,6 @@ const shopSlice = createSlice({
       state.name = null;
       state.id = null;
       state.email = null;
-      state.products = null;
-      state.category = null;
       state.loading = false;
       state.error = null;
     },
@@ -78,8 +74,6 @@ const shopSlice = createSlice({
         state.name = action.payload.name || null;
         state.id = action.payload._id || null;
         state.email = action.payload.email || null;
-        state.products = action.payload.products || null;
-        state.category = action.payload.category || null;
       })
       .addCase(fetchShopData.rejected, (state, action) => {
         state.loading = false;

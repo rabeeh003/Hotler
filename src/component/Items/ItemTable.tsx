@@ -296,16 +296,16 @@ const ItemTable: React.FC<{ data: Array<object> }> = ({ data }) => {
       // className="mt-4"
       isHeaderSticky
       bottomContentPlacement="outside" // Place outside to make sticky header
-      // containerProps={{
-      //   className: "max-h-[388px]",
-      // }}
+    // containerProps={{
+    //   className: "max-h-[388px]",
+    // }}
     >
       <TableHeader columns={headerColumns}>
         {(column) => (
           <TableColumn
             key={column.key}
             allowsSorting={column.key !== "actions"}
-            // width={column.key === "actions" ? "100px" : "auto"}
+          // width={column.key === "actions" ? "100px" : "auto"}
           >
             {column.label}
           </TableColumn>
@@ -313,10 +313,26 @@ const ItemTable: React.FC<{ data: Array<object> }> = ({ data }) => {
       </TableHeader>
       <TableBody items={sortedItems} emptyContent="No items to display.">
         {(item) => (
-          <TableRow key={item.key} className={highlightRows && item.count <= 5 ? (item.count <= 5 ? "bg-red-100" : item.count <= 10 ? "bg-yellow-100" : "") : ""}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey.toString())}</TableCell>}
+          <TableRow
+            key={item.key}
+            className={
+              "mouse-pointer " +
+              (highlightRows
+                ? item.count <= 5
+                  ? "text-red-500 "
+                  : item.count <= 10
+                    ? "text-yellow-500"
+                    : ""
+                : "")
+            }
+          >
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey.toString())}</TableCell>
+            )}
           </TableRow>
         )}
+
+
       </TableBody>
     </Table>
   );

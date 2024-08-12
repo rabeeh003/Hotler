@@ -21,7 +21,7 @@ export default function ItemsPage() {
 
     const dispatch = useAppDispatch();
     const shopId = useAppSelector((state) => state.shop.id);
-    const { categories, products, loading, error } = useAppSelector((state) => state.categoryAndProducts);
+    const { categories, products, loading, error, productError, productLoading } = useAppSelector((state) => state.categoryAndProducts);
 
     useEffect(() => {
         if (shopId && categories.length == 0) {
@@ -67,9 +67,21 @@ export default function ItemsPage() {
                                 Add & edit products
                             </p>
                         }
-                        className=''
                     >
-                        <ItemTable data={products} />
+                        {productLoading ? (
+                            <div className="flex items-center justify-center h-full">
+                                <Spinner />
+                            </div>
+                        ) : productError ? (
+                            <div className="grid items-center justify-center h-full">
+                                <p className="text-red-500">Sorry, Try again.</p>
+                                <Button className='max-w-0 m-auto border-none' variant='bordered'>
+                                    <RefreshCcw />
+                                </Button>
+                            </div>
+                        ) : (
+                            <ItemTable data={products} />
+                        )}
                     </AccordionItem>
                 </Accordion>
                 <Accordion
@@ -103,7 +115,7 @@ export default function ItemsPage() {
                             <div className="grid items-center justify-center h-full">
                                 <p className="text-red-500">Sorry, Try again.</p>
                                 <Button className='max-w-0 m-auto border-none' variant='bordered'>
-                                    <RefreshCcw/>
+                                    <RefreshCcw />
                                 </Button>
                             </div>
                         ) : (
@@ -111,7 +123,7 @@ export default function ItemsPage() {
                                 {categories.map((category) => (
                                     <div key={category._id} className="flex items-center justify-between py-3 border-b-1 dark:border-gray-800 border-gray-300">
                                         <div className="flex gap-4">
-                                            <Avatar isBordered color="default" radius='full' src={category.image}/>
+                                            <Avatar isBordered color="default" radius='full' src={category.image} />
                                             <span className="text-md font-sans font-semibold">{category.name}</span>
                                         </div>
                                         <div className="flex gap-4">
@@ -157,4 +169,5 @@ export default function ItemsPage() {
                 </Accordion>
             </div>
         </main>
-    )}
+    )
+}
