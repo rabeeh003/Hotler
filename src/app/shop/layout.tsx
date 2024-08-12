@@ -79,7 +79,7 @@ export default function Layout({
       <main className="relative">
         <AdminNavbar />
         <div className="container m-auto md:flex h-full gap-4 px-3 md:pt-2 pb-5">
-          <div className="sticky top-20 self-start">
+          <div className="sticky top-16 self-start">
             <SideBar />
           </div>
           {children}

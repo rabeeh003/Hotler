@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Register",
-  description: "Manage your service and customers with us",
+  title: "Reset Password",
+  description: "sequre your password",
 };
 
 export default function Layout({

@@ -1,33 +1,50 @@
-"use client";
+'use client';
 import { Button, Input } from '@nextui-org/react';
-import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import shopAPI from '../../../../../lib/axios/shop';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 
-const ShopLogin: React.FC = () => {
+const ShopRegister: React.FC = () => {
+  const [shopName, setShopName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
   const [errors, setErrors] = useState<any>({});
   const [backendError, setBackendError] = useState<string | null>(null);
-  const router = useRouter();
 
-  const schema = z.object({
-    email: z.string().email({ message: "Please enter a valid email" }),
-    password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  const router = useRouter();
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyCPvqKJigbPJWjWpPcHXQ-c5TxuHTXQaRM", // Replace with your actual Google Maps API Key
   });
 
-  const login = (e: React.FormEvent) => {
+  const schema = z.object({
+    shopName: z.string().min(1, { message: "Shop name is required" }),
+    email: z.string().email({ message: "Please enter a valid email" }),
+    phone: z.string().min(10, { message: "Please enter a valid phone number" }),
+    password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+    confirmPassword: z.string().min(6, { message: "Confirm password must be at least 6 characters" }),
+  }).refine(data => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // field path to display error
+  });
+
+  const register = (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      schema.parse({ email, password });
+      schema.parse({ shopName, email, phone, password, confirmPassword });
       setErrors({});
       setBackendError(null);
-      shopAPI.post('api/auth/shop-login', { email, password })
+
+      // Your API request to register the shop
+      shopAPI.post('api/auth/shop-signup', { name:shopName, email, phone, password,confirmPassword, location:{latitude, longitude} })
         .then((res) => {
           console.log(res.data);
-          router.push('/shop'); 
+          router.push('/shop');
         })
         .catch((err) => {
           if (err.response && err.response.data) {
@@ -44,11 +61,56 @@ const ShopLogin: React.FC = () => {
     }
   };
 
+  const mapContainerStyle = {
+    width: "100%",
+    height: "400px",
+    borderRadius: "10px",
+  };
+  
+  const center = {
+    lat: 10.1632, // Default center location (e.g., San Francisco)
+    lng: 76.6413,
+  };
+
+  const onMapClick = useCallback((event: google.maps.MapMouseEvent) => {
+    setLatitude(event.latLng?.lat() || center.lat);
+    setLongitude(event.latLng?.lng() || center.lng);
+  }, []);
+
+  const handleCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLatitude(latitude);
+          setLongitude(longitude);
+        },
+        (error) => {
+          console.error("Error getting geolocation", error);
+        }
+      );
+    } else {
+      console.error("Geolocation not supported");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="p-8 rounded md:shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Shop Login</h2>
-        <form onSubmit={login}>
+        <h2 className="text-2xl font-bold mb-6 text-center">Shop Register</h2>
+        <form onSubmit={register}>
+          <div className="my-2">
+            <Input
+              type="text"
+              label="Shop Name"
+              variant="bordered"
+              value={shopName}
+              onChange={(e) => setShopName(e.target.value)}
+              isInvalid={!!errors.shopName}
+              errorMessage={errors.shopName ? errors.shopName[0] : ''}
+              className="w-full"
+            />
+          </div>
           <div className="my-2">
             <Input
               type="email"
@@ -61,7 +123,19 @@ const ShopLogin: React.FC = () => {
               className="w-full"
             />
           </div>
-          <div className="mb-6">
+          <div className="my-2">
+            <Input
+              type="text"
+              label="Phone"
+              variant="bordered"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              isInvalid={!!errors.phone}
+              errorMessage={errors.phone ? errors.phone[0] : ''}
+              className="w-full"
+            />
+          </div>
+          <div className="my-2">
             <Input
               type="password"
               label="Password"
@@ -73,24 +147,50 @@ const ShopLogin: React.FC = () => {
               className="w-full"
             />
           </div>
-          <p className="text-center text-sm my-2">
-            <a href="shop/reset/">Forgot password?</a>
-          </p>
+          <div className="my-2">
+            <Input
+              type="password"
+              label="Confirm Password"
+              variant="bordered"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              isInvalid={!!errors.confirmPassword}
+              errorMessage={errors.confirmPassword ? errors.confirmPassword[0] : ''}
+              className="w-full"
+            />
+          </div>
+          {isLoaded && !loadError && (
+            <div className='my-2'>
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                zoom={10}
+                center={latitude && longitude ? { lat: latitude, lng: longitude } : center}
+                onClick={onMapClick}
+              >
+                {latitude && longitude && <Marker position={{ lat: latitude, lng: longitude }} draggable={true} onDragEnd={onMapClick} />}
+              </GoogleMap>
+              <Button onPress={handleCurrentLocation} size='sm' variant='ghost' className="w-full mt-2">
+                Use Current Location
+              </Button>
+            </div>
+          )}
+          {/* {latitude && longitude && (
+            <p className="text-center my-2">
+              Selected Location: Lat: {latitude}, Long: {longitude}
+            </p>
+          )} */}
           <Button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-xl hover:bg-blue-600">
-            Login
+            Register
           </Button>
         </form>
         {backendError && (
           <div className="mb-4 text-red-500 text-center">
             {backendError}
           </div>
-        )} 
-        <p className="text-center text-sm my-2">
-          <a href="shop/register/">Create new account</a>
-        </p>
+        )}
       </div>
     </div>
   );
 };
 
-export default ShopLogin;
+export default ShopRegister;
