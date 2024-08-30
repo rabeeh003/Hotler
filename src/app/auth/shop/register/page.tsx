@@ -41,7 +41,7 @@ const ShopRegister: React.FC = () => {
       setBackendError(null);
 
       // Your API request to register the shop
-      shopAPI.post('api/auth/shop-signup', { name:shopName, email, phone, password,confirmPassword, location:{latitude, longitude} })
+      shopAPI.post('api/auth/shop-signup', { name: shopName, email, phone, password, confirmPassword, location: { latitude, longitude } })
         .then((res) => {
           console.log(res.data);
           router.push('/shop');
@@ -63,10 +63,10 @@ const ShopRegister: React.FC = () => {
 
   const mapContainerStyle = {
     width: "100%",
-    height: "400px",
+    height: "87%",
     borderRadius: "10px",
   };
-  
+
   const center = {
     lat: 10.1632, // Default center location (e.g., San Francisco)
     lng: 76.6413,
@@ -96,98 +96,105 @@ const ShopRegister: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="p-8 rounded md:shadow-md w-full max-w-md">
+      <div className="p-8 rounded-xl border-1 border-gray-100 dark:border-gray-800 m-2 md:shadow-md w-full max-w-2xl">
         <h2 className="text-2xl font-bold mb-6 text-center">Shop Register</h2>
         <form onSubmit={register}>
-          <div className="my-2">
-            <Input
-              type="text"
-              label="Shop Name"
-              variant="bordered"
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
-              isInvalid={!!errors.shopName}
-              errorMessage={errors.shopName ? errors.shopName[0] : ''}
-              className="w-full"
-            />
-          </div>
-          <div className="my-2">
-            <Input
-              type="email"
-              label="Email"
-              variant="bordered"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              isInvalid={!!errors.email}
-              errorMessage={errors.email ? errors.email[0] : ''}
-              className="w-full"
-            />
-          </div>
-          <div className="my-2">
-            <Input
-              type="text"
-              label="Phone"
-              variant="bordered"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              isInvalid={!!errors.phone}
-              errorMessage={errors.phone ? errors.phone[0] : ''}
-              className="w-full"
-            />
-          </div>
-          <div className="my-2">
-            <Input
-              type="password"
-              label="Password"
-              variant="bordered"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              isInvalid={!!errors.password}
-              errorMessage={errors.password ? errors.password[0] : ''}
-              className="w-full"
-            />
-          </div>
-          <div className="my-2">
-            <Input
-              type="password"
-              label="Confirm Password"
-              variant="bordered"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              isInvalid={!!errors.confirmPassword}
-              errorMessage={errors.confirmPassword ? errors.confirmPassword[0] : ''}
-              className="w-full"
-            />
-          </div>
-          {isLoaded && !loadError && (
-            <div className='my-2'>
-              <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                zoom={10}
-                center={latitude && longitude ? { lat: latitude, lng: longitude } : center}
-                onClick={onMapClick}
-              >
-                {latitude && longitude && <Marker position={{ lat: latitude, lng: longitude }} draggable={true} onDragEnd={onMapClick} />}
-              </GoogleMap>
-              <Button onPress={handleCurrentLocation} size='sm' variant='ghost' className="w-full mt-2">
-                Use Current Location
-              </Button>
+          <div className='flex flex-wrap gap-2'>
+            <div className='w-full md:w-[48%]'>
+              <div className="my-2">
+                <Input
+                  type="text"
+                  label="Shop Name"
+                  variant="bordered"
+                  value={shopName}
+                  onChange={(e) => setShopName(e.target.value)}
+                  isInvalid={!!errors.shopName}
+                  errorMessage={errors.shopName ? errors.shopName[0] : ''}
+                  className="w-full"
+                />
+              </div>
+              <div className="my-2">
+                <Input
+                  type="email"
+                  label="Email"
+                  variant="bordered"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  isInvalid={!!errors.email}
+                  errorMessage={errors.email ? errors.email[0] : ''}
+                  className="w-full"
+                />
+              </div>
+              <div className="my-2">
+                <Input
+                  type="text"
+                  label="Phone"
+                  variant="bordered"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  isInvalid={!!errors.phone}
+                  errorMessage={errors.phone ? errors.phone[0] : ''}
+                  className="w-full"
+                />
+              </div>
+              <div className="my-2">
+                <Input
+                  type="password"
+                  label="Password"
+                  variant="bordered"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  isInvalid={!!errors.password}
+                  errorMessage={errors.password ? errors.password[0] : ''}
+                  className="w-full"
+                />
+              </div>
+              <div className="my-2">
+                <Input
+                  type="password"
+                  label="Confirm Password"
+                  variant="bordered"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  isInvalid={!!errors.confirmPassword}
+                  errorMessage={errors.confirmPassword ? errors.confirmPassword[0] : ''}
+                  className="w-full"
+                />
+              </div>
             </div>
-          )}
+            {isLoaded && !loadError && (
+              <div className='my-2 w-full md:w-1/2 min-h-[300px]'>
+                <GoogleMap
+                  mapContainerStyle={mapContainerStyle}
+                  zoom={10}
+                  center={latitude && longitude ? { lat: latitude, lng: longitude } : center}
+                  onClick={onMapClick}
+                >
+                  {latitude && longitude && <Marker position={{ lat: latitude, lng: longitude }} draggable={true} onDragEnd={onMapClick} />}
+                </GoogleMap>
+                <Button onPress={handleCurrentLocation} size='sm' variant='ghost' className="w-full mt-2">
+                  Use Current Location
+                </Button>
+              </div>
+            )}
+          </div>
           {/* {latitude && longitude && (
             <p className="text-center my-2">
               Selected Location: Lat: {latitude}, Long: {longitude}
             </p>
           )} */}
+          {backendError && (
+            <div className="my-2 text-red-500 text-center">
+              {backendError}
+            </div>
+          )}
           <Button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-xl hover:bg-blue-600">
             Register
           </Button>
         </form>
-        {backendError && (
-          <div className="mb-4 text-red-500 text-center">
-            {backendError}
-          </div>
-        )}
+        <p className="text-center text-sm my-2">
+          <a href="/auth/shop/">I have an account. Login</a>
+        </p>
       </div>
     </div>
   );

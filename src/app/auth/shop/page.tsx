@@ -1,18 +1,17 @@
 "use client";
-
 import { Button, Input } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import shopAPI from '../../../../lib/axios/shop';
 import { z } from 'zod';
 import { saveToken } from '../../../../lib/tokenExpair';
-import { useRouter } from 'next/navigation'; // Change this import
+import { useRouter } from 'next/navigation'; 
 
 const ShopLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<any>({});
   const [backendError, setBackendError] = useState<string | null>(null);
-  const router = useRouter(); // This should work now
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -52,7 +51,7 @@ const ShopLogin: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="p-8 rounded md:shadow-md w-full max-w-md">
+      <div className="p-8 rounded-xl border-1 border-gray-100 dark:border-gray-800 m-2 md:shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Shop Login</h2>
         {backendError && (
           <div className="mb-4 text-red-500 text-center">

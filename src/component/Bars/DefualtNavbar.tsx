@@ -25,7 +25,7 @@ function DefualtNavbar() {
       }}
     >
       <NavbarBrand>
-        <p className="font-bold text-inherit">Hotler</p>
+        <p className="font-bold text-inherit text-3xl">Hotler</p>
       </NavbarBrand>
       {/* <NavbarContent className="hidden md:flex gap-4" justify="center">
         <NavbarItem>

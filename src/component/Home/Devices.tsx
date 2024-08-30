@@ -5,42 +5,42 @@ import Image from "next/image";
 
 const content = [
     {
-        title: "Collaborative Editing",
+        title: "Phone & Tabs",
         description:
-            "Work together in real time with your team, clients, and stakeholders. Collaborate on documents, share ideas, and make decisions quickly. With our platform, you can streamline your workflow and increase productivity.",
+            "We developed responseve applicaation. so this tool you can use in your Phone or tablets. every one can simply understand the working and manage this tool. we focus for user experiance so that help simpe handeling.",
         content: (
             <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-                Collaborative Editing
+                Phone & Tabs
             </div>
         ),
     },
     {
-        title: "Real time changes",
+        title: "Laptop",
         description:
-            "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
+            "Hotler is responcive and simple order and billing management tool. every one can simple handile this. its developed responcively so that esayle manage in your laptop or computer. we follow simple user interface for using every one.",
         content: (
             <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
-                Real time changes
+                Laptop
             </div>
         ),
     },
     {
-        title: "Version control",
+        title: "Windows & Macos",
         description:
-            "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+            "Hotler is a web application. its run in browser. so that OS (operating system) is not matter. its can use in any latest browseres. its also PWA application ( progresive web application ).",
         content: (
             <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
-                Version control
+                Windows & Macos
             </div>
         ),
     },
     {
-        title: "Running out of content",
+        title: "Ios & Android",
         description:
-            "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+            "The mobail application is under construction. currently any one can use our PWA (prograsive web application) application. its run in browser. so any os ( android or ios ) can use this if a browser is installed.",
         content: (
             <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-                Running out of content
+                Ios & Android
             </div>
         ),
     },

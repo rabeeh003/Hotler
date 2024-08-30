@@ -9,25 +9,27 @@ import PricingPlans from "@/component/Home/Pricing";
 export default function Home() {
   const pricingPlans = [
     {
-      title: 'Pro Plan',
-      price: 15,
-      originalPrice: 39,
+      title: 'Monthly',
+      price: 189,
+      originalPrice: 200,
       features: [
-        'Unlimited Projects',
-        'Unlimited API calls',
-        'Advanced Project Settings',
-        'Priority Support',
+        '28 days',
       ],
     },
     {
-      title: 'Basic Plan',
-      price: 5,
-      originalPrice: 10,
+      title: 'Half Year',
+      price: 1099,
+      originalPrice: 1200,
       features: [
-        '10 Projects',
-        '1000 API calls',
-        'Basic Project Settings',
-        'Standard Support',
+        '168 days',
+      ],
+    },
+    {
+      title: 'Year',
+      price: 1799,
+      originalPrice: 2400,
+      features: [
+        '333 days',
       ],
     },
     // Add more plans as needed
@@ -40,12 +42,13 @@ export default function Home() {
         <div className="hidden md:flex mt-40 overflow-hidden bg-white dark:bg-black  sticky  ">
           <HeroSection />
         </div>
+        
         <div className=" overflow-hidden bg-white dark:bg-black   ">
           <HeroHighlight>
             <SparklesText className="text-center text-[40px]" text={"Devices"} />
             <DevicesPage />
           </HeroHighlight>
-          <HeroHighlight>
+          <HeroHighlight >
             <SparklesText className="text-center text-[40px]" text={"Pricing"} />
             <PricingPlans plans={pricingPlans} />
           </HeroHighlight>
