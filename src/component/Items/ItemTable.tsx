@@ -52,7 +52,7 @@ const ItemTable: React.FC<{ data: Array<object> }> = ({ data }) => {
     price: item.price,
     offer: item.offerPrice || undefined,
     count: item.quantity,
-    category: item.category.name,
+    category: item.category?.name,
     imageUrl: item.image, // Add imageUrl from data
   }));
 

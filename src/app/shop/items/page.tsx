@@ -80,7 +80,11 @@ export default function ItemsPage() {
                                 </Button>
                             </div>
                         ) : (
-                            <ItemTable data={products} />
+                            <>
+                            {products.length > 0 ?(
+                                <ItemTable data={products} />
+                            ) : <p className='text-center'>no data found</p> } 
+                            </>
                         )}
                     </AccordionItem>
                 </Accordion>
